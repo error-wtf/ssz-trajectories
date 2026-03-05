@@ -7,7 +7,7 @@ name = "ssz-trajectories"
 version = "0.1.0"
 description = "SSZ (Segmented Spacetime) trajectory toolkit -- geodesic integration, Xi functions, phi-Euler embedding"
 readme = "README.md"
-license = {text = "MIT"}
+license = {text = "Anti-Capitalist Software License (v 1.4)"}
 requires-python = ">=3.9"
 authors = [
     {name = "Carmen N. Wrede"},
@@ -18,7 +18,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Physics",
-    "License :: OSI Approved :: MIT License",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3",
 ]
 dependencies = []
