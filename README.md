@@ -182,12 +182,15 @@ ssz-trajectories/
 │   ├── test_embedding.py
 │   ├── test_integrator.py
 │   └── test_analysis.py
+├── reports/
+│   ├── TEST_REPORT.md      # 63/63 tests passed
+│   └── test_results.xml    # JUnit XML
 ├── examples/
 │   ├── radial_null_outgoing.py
 │   ├── nonradial_deflection.py
 │   └── plot_xi_profile.py
 ├── pyproject.toml
-├── LICENSE (MIT)
+├── LICENSE (Anti-Capitalist Software License v1.4)
 └── README.md
 ```
 
@@ -195,4 +198,8 @@ ssz-trajectories/
 
 ## License
 
-MIT — Carmen N. Wrede, Lino P. Casu
+**Anti-Capitalist Software License (v 1.4)**
+
+Copyright (c) 2025 Carmen N. Wrede, Lino P. Casu
+
+This is anti-capitalist software, released for free use by individuals and organizations that do not operate by capitalist principles. See [LICENSE](LICENSE) for full terms.
