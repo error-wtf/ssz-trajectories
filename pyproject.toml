@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssz-trajectories"
+version = "0.1.0"
+description = "SSZ (Segmented Spacetime) trajectory toolkit -- geodesic integration, Xi functions, phi-Euler embedding"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Carmen N. Wrede"},
+    {name = "Lino P. Casu"},
+]
+keywords = ["physics", "geodesics", "segmented-spacetime", "general-relativity"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = []
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.5", "numpy>=1.21"]
+dev = ["pytest>=7.0", "flake8"]
+
+[project.urls]
+Homepage = "https://github.com/error-wtf/ssz-trajectories"
+Repository = "https://github.com/error-wtf/ssz-trajectories"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
