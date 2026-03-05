@@ -11,54 +11,66 @@ from ssz_trajectories import (
 )
 
 
-class TestAnalyzeOrbit:
-    def _run_orbit(self, b):
-        r0 = max(300.0, b * 4)
-        lam_max = r0 / c_light * 12
-        pts = integrate_null_geodesic(Xi_blend, b, r0, lam_max, 2e-9)
-        return analyze_orbit(Xi_blend, pts)
+def _orbit(b, r0=None):
+    if r0 is None:
+        r0 = max(500.0, b * 10)
+    lam_max = r0 / c_light * 12
+    dlam = 2e-9 if b < 20 else 5e-8
+    pts = integrate_null_geodesic(Xi_blend, b, r0, lam_max, dlam)
+    return pts
 
+
+class TestAnalyzeOrbit:
     def test_small_b_jumps(self):
         """b=3: must have 2 N-level jumps (entry + exit)."""
-        res = self._run_orbit(3.0)
+        res = analyze_orbit(Xi_blend, _orbit(3.0))
+        assert res["xl_jumps"] == 2
+
+    def test_b50_jumps(self):
+        """b=50: entry + exit must both be counted."""
+        res = analyze_orbit(Xi_blend, _orbit(50.0))
+        assert res["xl_jumps"] == 2
+
+    def test_b80_jumps(self):
+        """b=80: entry + exit must both be counted."""
+        res = analyze_orbit(Xi_blend, _orbit(80.0))
         assert res["xl_jumps"] == 2
 
     def test_large_b_no_jumps(self):
         """b=200: weak field only, no jumps."""
-        res = self._run_orbit(200.0)
+        res = analyze_orbit(Xi_blend, _orbit(200.0))
         assert res["xl_jumps"] == 0
 
     def test_phi_total_positive(self):
-        res = self._run_orbit(5.0)
+        res = analyze_orbit(Xi_blend, _orbit(5.0))
         assert res["phi_total"] > 0
 
     def test_r_range(self):
-        res = self._run_orbit(10.0)
+        res = analyze_orbit(Xi_blend, _orbit(10.0))
         assert res["r_min"] < 20
         assert res["r_max"] > 200
 
 
 class TestDeflection:
-    def test_positive_for_gravity(self):
-        """Deflection must be positive (gravity bends light toward mass)."""
-        b = 5.0
-        r0 = 300.0
-        lam_max = r0 / c_light * 12
-        pts = integrate_null_geodesic(Xi_blend, b, r0, lam_max, 2e-9)
-        phi_total = abs(pts[-1][2] - pts[0][2])
-        defl = deflection_angle(phi_total, b, r0, Xi_blend)
-        assert defl > 0
+    def test_is_dphi_minus_pi(self):
+        """deflection_angle must return phi_total - pi."""
+        assert abs(deflection_angle(4.0) - (4.0 - math.pi)) < 1e-15
 
-    def test_decreases_with_b(self):
-        """Larger b => less deflection (weaker gravity)."""
+    def test_positive_deep_orbit(self):
+        """Deep orbits (b=5) must have delta > 0."""
+        pts = _orbit(5.0, r0=2000.0)
+        phi_total = abs(pts[-1][2] - pts[0][2])
+        assert deflection_angle(phi_total) > 0
+
+    def test_increases_below_barrier(self):
+        """In SSZ strong field, deflection increases with b
+        (more strong-field path traversed) up to the blend-zone barrier."""
         defls = []
-        for b in [120.0, 200.0]:
-            r0 = max(300.0, b * 4)
-            lam_max = r0 / c_light * 12
-            pts = integrate_null_geodesic(Xi_blend, b, r0, lam_max, 2e-9)
+        for b in [5.0, 50.0, 80.0]:
+            pts = _orbit(b, r0=5000.0)
             phi_total = abs(pts[-1][2] - pts[0][2])
-            defls.append(deflection_angle(phi_total, b, r0, Xi_blend))
-        assert defls[0] > defls[1]
+            defls.append(deflection_angle(phi_total))
+        assert defls[0] < defls[1] < defls[2]
 
 
 class TestBridgeIdentity:

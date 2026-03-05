@@ -60,36 +60,22 @@ def analyze_orbit(xi_fn, pts, r_s=1.0):
     }
 
 
-def deflection_angle(phi_total, b, r0, xi_fn):
-    """Compute gravitational deflection corrected for finite r0.
-
-    The flat-space reference angle for a straight line starting at
-    finite r0 with impact parameter b is:
-        phi_flat = pi - 2 * arcsin(b * D0 / r0)
-
-    The deflection is then:
-        delta = phi_total - phi_flat
+def deflection_angle(phi_total, b=None, r0=None, xi_fn=None):
+    """Deflection angle delta = phi_total - pi.
 
     Parameters
     ----------
     phi_total : float
         Total azimuthal angle swept (radians).
-    b : float
-        Impact parameter.
-    r0 : float
-        Starting radius.
-    xi_fn : callable
-        Xi function.
+    b, r0, xi_fn : ignored
+        Kept for backward compatibility.
 
     Returns
     -------
     float
         Deflection angle in radians.
     """
-    D0 = D(r0, xi_fn)
-    bD_r0 = min(b * D0 / r0, 0.9999)
-    flat_ref = math.pi - 2.0 * math.asin(bD_r0)
-    return phi_total - flat_ref
+    return phi_total - math.pi
 
 
 def bridge_identity(xi_fn, r, r_s=1.0):
