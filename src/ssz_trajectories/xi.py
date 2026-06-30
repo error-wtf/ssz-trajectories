@@ -7,10 +7,10 @@ from .constants import PHI, BLEND_LO, BLEND_HI, RS_DEFAULT
 
 
 def Xi_strong(r, r_s=RS_DEFAULT):
-    """Strong-field: Xi = 1 - exp(-phi * r / r_s)."""
+    """Strong-field: Xi = 1 - exp(-phi * r_s / r)."""
     if r <= 0:
         return 0.0
-    return 1.0 - math.exp(-PHI * r / r_s)
+    return 1.0 - math.exp(-PHI * r_s / r)
 
 
 def Xi_weak(r, r_s=RS_DEFAULT):

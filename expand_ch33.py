@@ -14,7 +14,7 @@ section_33_0 = r"""Before deriving trajectory equations, we must specify the seg
 
 ### The Two Regimes
 
-- **Strong field** (r/r_s < ~90): Xi_strong(r) = 1 - exp(-phi * r / r_s)
+- **Strong field** (r/r_s < ~90): Xi_strong(r) = 1 - exp(-phi * r_s / r)
 - **Weak field** (r/r_s > ~110): Xi_weak(r) = r_s / (2r)
 
 At r = r_s the strong-field formula gives Xi(r_s) = 1 - exp(-phi) = 0.802, and therefore D(r_s) = 1/(1 + 0.802) = 0.555. At large r the weak-field formula recovers the Newtonian limit Xi -> 0, D -> 1.

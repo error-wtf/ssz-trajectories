@@ -114,7 +114,7 @@ The segment-density function $\Xi(r)$ encodes how densely spacetime is "segmente
 
 | Regime | Formula | Range |
 |--------|---------|-------|
-| **Strong** | $\Xi = 1 - e^{-\varphi r/r_s}$ | $r/r_s < 80$ |
+| **Strong** | $\Xi = 1 - e^{-\varphi r_s / r}$ | $r/r_s < 80$ |
 | **Blend** | C² Hermite interpolation | $80 \le r/r_s \le 120$ |
 | **Weak** | $\Xi = r_s/(2r)$ | $r/r_s > 120$ |
 
